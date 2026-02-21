@@ -46,10 +46,10 @@ Copy the skill into your agent's skills directory:
 
 ```bash
 # Claude Code
-cp -r skill-security-audit ~/.claude/skills/
+cp -r skills-security-audit ~/.claude/skills/
 
 # Or clone directly
-git clone https://github.com/agentnode-dev/skills-security-audit.git ~/.claude/skills/skill-security-audit
+git clone https://github.com/agentnode-dev/skills-security-audit.git ~/.claude/skills/skills-security-audit
 ```
 
 ### 2. Audit a specific skill
