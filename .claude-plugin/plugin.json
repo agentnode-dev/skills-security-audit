@@ -1,0 +1,11 @@
+{
+  "name": "skills-security-audit",
+  "version": "1.0.0",
+  "description": "Security audit for AI agent skills. Detect prompt injection, data exfiltration, malicious commands, obfuscated code, and more. 61 patterns aligned with OWASP Agentic AI Top 10.",
+  "author": {
+    "name": "agentnode-dev"
+  },
+  "repository": "https://github.com/agentnode-dev/skills-security-audit",
+  "license": "MIT",
+  "keywords": ["security", "audit", "skills", "mcp", "owasp"]
+}

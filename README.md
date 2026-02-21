@@ -34,40 +34,53 @@ Skills can read your SSH keys, exfiltrate environment variables, install persist
 | TE | Human Trust Exploitation | WARNING | ASI09 | TE-001 to TE-006 |
 | BM | Behavioral Manipulation | INFO | ASI10 | BM-001 to BM-005 |
 
-Every pattern includes malicious examples, explanations of the danger, and false-positive guidance. See [`references/security-rules.md`](references/security-rules.md) for the full ruleset.
+Every pattern includes malicious examples, explanations of the danger, and false-positive guidance. See [`skills/skills-security-audit/references/security-rules.md`](skills/skills-security-audit/references/security-rules.md) for the full ruleset.
 
 ---
 
 ## Quick Start
 
-### 1. Install
+### Option A: Claude Code Plugin (recommended for Claude Code users)
 
 ```bash
-# One-click install via skills.sh
-npx skills add agentnode-dev/skills-security-audit
-
-# Or copy manually
-cp -r skills-security-audit ~/.claude/skills/
-
-# Or clone directly
-git clone https://github.com/agentnode-dev/skills-security-audit.git ~/.claude/skills/skills-security-audit
+# Add the marketplace and install
+/plugin marketplace add agentnode-dev/skills-security-audit
+/plugin install skills-security-audit
 ```
 
-### 2. Audit a specific skill
+Then restart Claude Code. The skill will appear in your available skills and trigger automatically when relevant.
 
-Ask your AI agent:
+### Option B: Copy into any AI agent
+
+Clone the repo and point your AI agent to the directory:
+
+```bash
+git clone https://github.com/agentnode-dev/skills-security-audit.git
+```
+
+Then tell your agent:
+
+```
+Load the skill at /path/to/skills-security-audit/skills/skills-security-audit/SKILL.md and audit the skill at /path/to/suspicious-skill/
+```
+
+### Option C: Paste into any chat
+
+Copy the contents of [`skills/skills-security-audit/SKILL.md`](skills/skills-security-audit/SKILL.md) into your AI agent's system prompt or conversation, then ask it to audit a skill. This works with any AI agent — no installation needed.
+
+### Usage
+
+Once loaded, ask your agent:
 
 ```
 Audit the skill at /path/to/suspicious-skill/
 ```
 
-### 3. Scan all installed skills
+Or scan all installed skills:
 
 ```
 Scan all my installed skills for security issues
 ```
-
-That's it. No configuration, no API keys, no dependencies.
 
 ---
 
@@ -112,19 +125,16 @@ Each finding contributes to the risk score:
 
 ## Platform Support
 
-This skill works on any platform that supports file-based AI agent skills:
+This skill is pure markdown — any AI agent that can read files or accept pasted instructions can use it.
 
-- Claude Code
-- ChatGPT
-- OpenAI Agents
-- Gemini
-- Cursor
-- Windsurf
-- OpenClaw
-- ClawHub
-- Any platform with AI agent skill support
+**Native skill loading** (agent reads SKILL.md directly):
+- Claude Code (via plugin install or local file)
+- Cursor (via `.cursorrules` or project context)
+- Windsurf (via project context)
+- OpenClaw / ClawHub
 
-Because it is pure markdown read by the AI at runtime, there is nothing platform-specific to port or maintain.
+**Copy-paste** (paste SKILL.md content into conversation):
+- ChatGPT, Gemini, OpenAI Agents, or any LLM chat interface
 
 ---
 
@@ -143,8 +153,8 @@ This skill's detection patterns are informed by real-world threat intelligence:
 
 Contributions are welcome. To add a new detection pattern:
 
-1. Add the rule to `references/security-rules.md` following the existing format (pattern, malicious example, danger explanation, false-positive guidance)
-2. Update the summary table in both `references/security-rules.md` and `SKILL.md`
+1. Add the rule to `skills/skills-security-audit/references/security-rules.md` following the existing format (pattern, malicious example, danger explanation, false-positive guidance)
+2. Update the summary table in both `security-rules.md` and `SKILL.md` (both under `skills/skills-security-audit/`)
 3. Submit a pull request with a description of the threat the new pattern addresses
 
 ---

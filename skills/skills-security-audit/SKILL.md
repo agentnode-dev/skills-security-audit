@@ -36,7 +36,7 @@ Scan and audit AI agent skills, plugins, and tool definitions for security vulne
 | TE | Human Trust Exploitation | WARNING | ASI09 |
 | BM | Behavioral Manipulation | INFO | ASI10 |
 
-> Load `references/security-rules.md` for detailed detection patterns, examples, and false positive guidance.
+> Load `references/security-rules.md` (relative to this file's directory) for detailed detection patterns, examples, and false positive guidance.
 
 ## Audit Workflow
 
@@ -45,6 +45,8 @@ Scan and audit AI agent skills, plugins, and tool definitions for security vulne
 - If user specifies a directory path, scan all files in that directory recursively.
 - If user says "scan installed", scan platform-specific skill directories:
   - Claude Code: `~/.claude/plugins/cache/`
+  - Cursor: `~/.cursor/extensions/` and project `.cursorrules`
+  - Windsurf: `~/.codeium/windsurf/`
   - Other platforms: ask user for the directory path.
 - If user provides a GitHub URL, use WebFetch to retrieve the repository content, or clone it locally.
 - Scan these file types: `.md`, `.json`, `.js`, `.py`, `.sh`, `.ts`, `.yaml`, `.yml`
@@ -52,7 +54,7 @@ Scan and audit AI agent skills, plugins, and tool definitions for security vulne
 
 ### Phase 2: Analyze Each File
 
-- Load `references/security-rules.md` for detailed detection patterns.
+- Load `references/security-rules.md` (relative to this file's directory) for detailed detection patterns.
 - Read each file using the Read tool.
 - Check file content against all 9 categories (PI, DE, CE, OB, PA, SC, MP, TE, BM).
 - For each finding, record: rule ID (e.g., PI-001), severity, file path and line number, description, and recommended action.
