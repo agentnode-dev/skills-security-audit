@@ -44,8 +44,8 @@ Every pattern includes malicious examples, explanations of the danger, and false
 
 ```bash
 # Add the marketplace and install
-/plugin marketplace add agentnode-dev/skills-security-audit
-/plugin install skills-security-audit
+/plugin marketplace add https://github.com/agentnode-dev/skills-security-audit.git
+/plugin install skills-security-audit@agentnode-dev
 ```
 
 Then restart Claude Code. The skill will appear in your available skills and trigger automatically when relevant.
