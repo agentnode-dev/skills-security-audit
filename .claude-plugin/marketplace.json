@@ -1,0 +1,17 @@
+{
+  "name": "agentnode-dev",
+  "owner": {
+    "name": "agentnode-dev"
+  },
+  "plugins": [
+    {
+      "name": "skills-security-audit",
+      "source": "./",
+      "description": "Security audit for AI agent skills. 61 detection patterns aligned with OWASP Agentic AI Top 10.",
+      "version": "1.0.0",
+      "author": {
+        "name": "agentnode-dev"
+      }
+    }
+  ]
+}
