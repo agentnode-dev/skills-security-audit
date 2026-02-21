@@ -52,6 +52,8 @@ Scan and audit AI agent skills, plugins, and tool definitions for security vulne
 - Scan these file types: `.md`, `.json`, `.js`, `.py`, `.sh`, `.ts`, `.yaml`, `.yml`
 - List all files found and confirm with user before proceeding.
 
+> **Important: Do NOT dispatch this audit to a subagent (Task tool).** Subagents run in a sandboxed environment that cannot read `~/.claude/plugins/cache/` or other system directories. Always run the audit in the main conversation context.
+
 ### Phase 2: Analyze Each File
 
 - Load `references/security-rules.md` (relative to this file's directory) for detailed detection patterns.
@@ -68,9 +70,11 @@ Scan and audit AI agent skills, plugins, and tool definitions for security vulne
 - Output the structured report using the template below.
 - For batch scans of multiple skills, output a summary table at the end.
 
-## Report Template
+## Report Format
 
-Output this format after completing the audit:
+### Single Skill Report
+
+When auditing one skill, output this full report:
 
 ```
 ## Skill Security Audit Report
@@ -101,11 +105,49 @@ Output this format after completing the audit:
 ---
 
 ### Summary
-- CRITICAL: N
-- WARNING: N
-- INFO: N
+- CRITICAL: N | WARNING: N | INFO: N
 - Risk Score: X.X/10 — [Overall recommendation]
 ```
+
+### Batch Scan Report
+
+When scanning multiple skills, use this compact format. Start with the summary dashboard, then show only skills with findings:
+
+```
+## Skill Security Audit — Batch Report
+
+### Dashboard
+
+| # | Skill | Score | Level | C | W | I | Top Finding |
+|---|-------|-------|-------|---|---|---|-------------|
+| 1 | skill-a | 0.0 | ✅ SAFE | 0 | 0 | 0 | — |
+| 2 | skill-b | 2.4 | ⚠️ RISKY | 0 | 3 | 0 | [PA-001] Blanket permission grant |
+| 3 | skill-c | 6.0 | 🔴 DANGEROUS | 2 | 1 | 1 | [DE-001] Reads ~/.ssh/id_rsa |
+| 4 | skill-d | 8.2 | 🟣 MALICIOUS | 3 | 2 | 0 | [CE-003] curl | sh execution |
+
+**Scanned: 4 skills | Clean: 1 | Needs review: 3**
+
+---
+
+### #3 skill-c — 6.0/10 🔴 DANGEROUS
+
+| Rule | File:Line | Finding | Action |
+|------|-----------|---------|--------|
+| [DE-001] CRITICAL | lib/init.sh:14 | Reads `~/.ssh/id_rsa` | Remove sensitive file access |
+| [DE-004] CRITICAL | lib/init.sh:15 | POSTs to external URL | Remove HTTP exfiltration |
+| [OB-007] WARNING | lib/init.sh:13 | Comment says "setup" but code exfiltrates | Rewrite or remove |
+| [BM-003] INFO | lib/init.sh:16 | Suppresses stderr output | Review necessity |
+
+### #4 skill-d — 8.2/10 🟣 MALICIOUS
+...
+```
+
+**Batch format rules:**
+- Dashboard table always comes first — gives the user an instant overview.
+- Only expand details for skills scoring above 0.0 (skip SAFE skills).
+- Use a compact table per skill instead of nested bullet lists.
+- Use emoji indicators in the Level column: ✅ SAFE, ⚠️ RISKY, 🔴 DANGEROUS, 🟣 MALICIOUS.
+- Show the single most important finding in the "Top Finding" column of the dashboard.
 
 ## Scoring
 
@@ -120,13 +162,6 @@ Risk levels:
 - **2.1–5.0: RISKY** — Manual review recommended before use.
 - **5.1–8.0: DANGEROUS** — Do not install.
 - **8.1–10.0: MALICIOUS** — Confirmed malicious intent. Report to marketplace.
-
-## Batch Scan Summary
-
-When scanning multiple skills, output a summary table:
-
-| Skill | Score | Level | CRITICAL | WARNING | INFO |
-|-------|-------|-------|----------|---------|------|
 
 ## False Positive Guidance
 
