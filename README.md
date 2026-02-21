@@ -1,5 +1,11 @@
 # Skill Security Audit
 
+[![Install with skills](https://img.shields.io/badge/npx-skills%20add-blue)](https://skills.sh)
+
+```bash
+npx skills add agentnode-dev/skills-security-audit
+```
+
 **Detect malicious AI agent skills before they compromise your system.**
 
 A cross-platform security audit skill that scans third-party AI agent skills, plugins, and tool definitions for security vulnerabilities. Uses AI semantic analysis with 61 detection patterns across 9 risk categories aligned with the [OWASP Agentic AI Top 10](https://owasp.org/www-project-agentic-ai-threats/). Zero dependencies -- works on any platform that supports AI agent skills.
