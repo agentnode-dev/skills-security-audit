@@ -1,5 +1,5 @@
 ---
-name: skill-security-audit
+name: skills-security-audit
 description: >
   Audit AI agent skills for security risks before installation or periodically.
   Works on Claude Code, OpenClaw, and all platforms.
