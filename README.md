@@ -127,22 +127,6 @@ Because it is pure markdown read by the AI at runtime, there is nothing platform
 
 ---
 
-## Comparison with Alternatives
-
-| | **skills-security-audit** (this) | **smartchainark/skill-security-audit** |
-|---|---|---|
-| Approach | Pure markdown skill -- AI semantic analysis | Python script -- regex pattern matching |
-| Detection patterns | 61 patterns, 9 categories | ~13 detectors |
-| OWASP alignment | ASI01 through ASI10 | Partial |
-| Dependencies | None | Python, pip packages |
-| Platform support | Any AI agent platform | Python environments |
-| Catches novel threats | Yes (semantic understanding) | No (signature matching only) |
-| Catches known IOCs | No (no IOC database) | Yes (IOC database) |
-
-The two approaches are complementary. Regex-based tools excel at matching known indicators of compromise (specific malicious URLs, known bad hashes). Semantic analysis excels at detecting novel, obfuscated, or subtly malicious patterns that have never been seen before. For maximum coverage, use both.
-
----
-
 ## Based On
 
 This skill's detection patterns are informed by real-world threat intelligence:
